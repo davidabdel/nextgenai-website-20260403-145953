@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Gap Calculator for Founders | NextGenAI Institute</title>
+    <meta
+      name="description"
+      content="Calculate the monthly cost of manual work in your business. Most $5M–$50M companies are losing 30% of their payroll to automatable tasks."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=IBM+Plex+Mono:wght@500;700&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .calculator-hero {
+        padding: 100px 0;
+        text-align: center;
+        background: var(--bg-secondary);
+      }
+      .calculator-hero h1 {
+        font-size: clamp(40px, 6vw, 64px);
+        margin-bottom: 24px;
+      }
+      .calculator-container {
+        max-width: 900px;
+        margin: -60px auto 80px;
+        background: var(--white);
+        padding: 60px;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        position: relative;
+        z-index: 10;
+      }
+      .calc-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: center;
+      }
+      @media (max-width: 768px) {
+        .calc-grid {
+          grid-template-columns: 1fr;
+          gap: 40px;
+        }
+        .calculator-container {
+            padding: 30px;
+            margin-top: -30px;
+        }
+      }
+      .calc-inputs label {
+        display: block;
+        margin-bottom: 12px;
+      }
+      .calc-inputs input {
+        width: 100%;
+        padding: 16px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        font-size: 18px;
+        margin-bottom: 32px;
+        font-family: "IBM Plex Mono", monospace;
+      }
+      .calc-output {
+        text-align: center;
+        padding: 40px;
+        background: var(--bg-primary);
+        border-radius: var(--radius);
+        border: 1px solid var(--accent-gold);
+      }
+      .calc-value {
+        font-family: "Playfair Display", serif;
+        font-size: 48px;
+        color: var(--text-primary);
+        margin: 16px 0;
+      }
+      .calc-note {
+        font-size: 14px;
+        color: var(--text-secondary);
+        max-width: 280px;
+        margin: 0 auto 24px;
+      }
+      .explanation-section {
+        padding: 80px 0;
+      }
+      .explanation-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 32px;
+        margin-top: 48px;
+      }
+      @media (max-width: 768px) {
+        .explanation-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .explanation-card h3 {
+        margin-bottom: 16px;
+        color: var(--text-primary);
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <a class="brand" href="index.html">NextGenAI Institute</a>
+        <div style="display: flex; gap: 24px; align-items: center;">
+            <a href="wiki/index.html" style="text-decoration: none; color: var(--text-secondary); font-weight: 500; font-size: 14px;">WIKI</a>
+            <a class="btn btn-primary nav-cta strategy-cta" href="#final-cta">Book Strategy Call</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <section class="calculator-hero">
+        <div class="container reveal">
+          <p class="eyebrow">THE ROI OF AI</p>
+          <h1>What is manual work costing you?</h1>
+          <p class="lede" style="margin-left: auto; margin-right: auto;">
+            Most $5M–$50M companies lose 30% of their payroll to automatable tasks. 
+            Use the tool below to see your "AI Gap."
+          </p>
+        </div>
+      </section>
+
+      <section class="container">
+        <div class="calculator-container reveal">
+          <div class="calc-grid">
+            <div class="calc-inputs">
+              <label class="input-label" for="employee-count">NUMBER OF EMPLOYEES</label>
+              <input id="employee-count" type="number" inputmode="numeric" min="1" value="25" />
+
+              <label class="input-label" for="average-salary">AVERAGE ANNUAL SALARY ($)</label>
+              <input
+                id="average-salary"
+                type="number"
+                inputmode="numeric"
+                min="1000"
+                step="1000"
+                value="75000"
+              />
+              <p class="input-note">
+                Our calculation uses the industry-standard "30% Automatable Task" metric for high-revenue service and logistics firms.
+              </p>
+            </div>
+            <div class="calc-output" aria-live="polite">
+              <p class="input-label">YOUR MONTHLY AI GAP</p>
+              <p class="calc-value" id="monthly-gap">$46,875/mo</p>
+              <p class="calc-note">
+                This is the capital you are leaving on the table every month due to manual overhead.
+              </p>
+              <a class="btn btn-primary full strategy-cta" href="#final-cta">Recover This Capital →</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="explanation-section section">
+        <div class="container reveal">
+          <p class="eyebrow">HOW IT WORKS</p>
+          <h2>Why 30%?</h2>
+          <p class="section-copy">
+            After auditing over 40 companies doing $5M–$50M, we found a consistent pattern. 
+            As businesses scale, "Operational Debt" accumulates in three primary areas:
+          </p>
+          
+          <div class="explanation-grid">
+            <article class="explanation-card">
+              <h3>The Shadow Payroll</h3>
+              <p>Employees spend an average of 2 hours a day on "work about work"—reporting, status updates, and moving data between systems that don't talk to each other.</p>
+            </article>
+            <article class="explanation-card">
+              <h3>Decision Friction</h3>
+              <p>When processes require manual approval or review for standard operations, projects stall. This "waiting time" costs thousands in lost momentum.</p>
+            </article>
+            <article class="explanation-card">
+              <h3>Tribal Knowledge Loss</h3>
+              <p>Without an AI Knowledge layer, your team spends 20% of their time just looking for information that already exists somewhere in the business.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-dark" id="final-cta" style="text-align: center;">
+        <div class="container reveal">
+            <h2>Ready to close the gap?</h2>
+            <p style="color: #d6d6d6; margin-top: 16px; margin-bottom: 32px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                In 30 days, we install an AI Operating System that automates these layers, removing you as the bottleneck and recovering your overhead.
+            </p>
+            <a class="btn btn-gold strategy-cta" href="#top">Book Your Strategy Call →</a>
+        </div>
+      </section>
+    </main>
+
+    <div class="strategy-modal" id="strategy-modal" aria-hidden="true">
+        <div class="strategy-modal__backdrop" data-close-strategy-modal></div>
+        <div
+          class="strategy-modal__panel"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="strategy-modal-title"
+        >
+          <button
+            class="strategy-modal__close"
+            type="button"
+            aria-label="Close form"
+            data-close-strategy-modal
+          >
+            ×
+          </button>
+          <p class="eyebrow">BOOK A STRATEGY CALL</p>
+          <h2 id="strategy-modal-title">Tell us where your business is now.</h2>
+          <p class="strategy-modal__intro">
+            Fill this out and we will follow up to schedule your 30-minute strategy call.
+          </p>
+          <form class="strategy-form" id="strategy-form">
+            <label class="strategy-form__field">
+              <span class="input-label">Name</span>
+              <input type="text" name="name" autocomplete="name" required />
+            </label>
+            <label class="strategy-form__field">
+              <span class="input-label">Company Name</span>
+              <input type="text" name="companyName" autocomplete="organization" required />
+            </label>
+            <label class="strategy-form__field">
+              <span class="input-label">No. Staff Members</span>
+              <input type="number" name="staffCount" min="1" step="1" inputmode="numeric" required />
+            </label>
+            <label class="strategy-form__field">
+              <span class="input-label">Email</span>
+              <input type="email" name="email" autocomplete="email" required />
+            </label>
+            <label class="strategy-form__field">
+              <span class="input-label">Phone Number</span>
+              <input type="tel" name="phone" autocomplete="tel" required />
+            </label>
+            <button class="btn btn-primary strategy-form__submit" type="submit">Send Details</button>
+            <p class="strategy-form__status" id="strategy-form-status" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+
+    <footer class="container" style="text-align: center; padding: 40px 0; border-top: 1px solid var(--line); margin-top: 80px;">
+      <p>© 2025 NextGenAI Institute. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
