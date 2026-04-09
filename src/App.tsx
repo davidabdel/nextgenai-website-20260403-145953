@@ -178,7 +178,7 @@ const Hero = () => {
       >
         <div className="relative h-full w-full">
           <img 
-            src="/src/assets/hero-founder.png" 
+            src="/assets/hero-founder.png" 
             alt="Founder looking out window" 
             className="h-full w-full object-cover object-left"
             style={{ maskImage: 'linear-gradient(to right, transparent, black 25%)', WebkitMaskImage: 'linear-gradient(to right, transparent, black 25%)' }}
@@ -250,7 +250,7 @@ const Problem = () => {
           <div className="relative hidden lg:block">
             <div className="aspect-[4/3] rounded-sm overflow-hidden border border-border">
               <img 
-                src="/src/assets/problem-founder.png" 
+                src="/assets/problem-founder.png" 
                 alt="Operational overwhelm" 
                 className="w-full h-full object-cover"
                 referrerPolicy="no-referrer"
