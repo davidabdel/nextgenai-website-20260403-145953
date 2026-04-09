@@ -16,45 +16,130 @@
     />
     <link rel="stylesheet" href="../styles.css" />
     <style>
-      .wiki-hero {
-        padding: 60px 0;
-        border-bottom: 1px solid var(--line);
+      :root {
+        --wiki-bg: #fafaf8;
+        --wiki-card-bg: #ffffff;
+        --wiki-accent: #c9a84c;
       }
+      
+      body {
+        background: var(--wiki-bg);
+      }
+
+      .wiki-hero {
+        padding: 120px 0 80px;
+        text-align: center;
+        border-bottom: 1px solid var(--line);
+        background: radial-gradient(circle at 50% 50%, rgba(201, 168, 76, 0.05), transparent);
+      }
+      
+      .wiki-hero h1 {
+        font-size: clamp(40px, 6vw, 64px);
+        margin-top: 16px;
+        line-height: 1.1;
+      }
+
       .wiki-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        grid-template-columns: repeat(2, 1fr);
         gap: 32px;
-        margin-top: 48px;
+        margin-top: -40px;
+        padding-bottom: 100px;
       }
+
+      @media (max-width: 768px) {
+        .wiki-grid {
+          grid-template-columns: 1fr;
+          margin-top: -20px;
+        }
+      }
+
       .wiki-card {
-        padding: 32px;
+        padding: 48px;
+        background: var(--wiki-card-bg);
         border: 1px solid var(--line);
-        background: var(--white);
         border-radius: var(--radius);
-        transition: transform 180ms ease, box-shadow 180ms ease;
+        transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
         text-decoration: none;
-        display: block;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        position: relative;
+        overflow: hidden;
       }
+
+      .wiki-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 4px;
+        height: 0;
+        background: var(--wiki-accent);
+        transition: height 0.3s ease;
+      }
+
       .wiki-card:hover {
-        transform: translateY(-4px);
-        box-shadow: var(--shadow);
-        border-color: var(--accent-gold);
+        transform: translateY(-8px);
+        box-shadow: 0 30px 60px rgba(0,0,0,0.06);
+        border-color: var(--wiki-accent);
       }
+
+      .wiki-card:hover::before {
+        height: 100%;
+      }
+
       .wiki-card h3 {
-        margin-top: 12px;
-        font-size: 20px;
+        margin-top: 20px;
+        font-size: 28px;
         color: var(--text-primary);
+        font-family: "Playfair Display", serif;
       }
+
       .wiki-card p {
-        margin-top: 12px;
-        font-size: 14px;
+        margin-top: 16px;
+        font-size: 16px;
+        line-height: 1.6;
         color: var(--text-secondary);
       }
-      .wiki-footer {
-        margin-top: 80px;
-        text-align: center;
-        padding: 40px 0;
-        border-top: 1px solid var(--line);
+
+      .wiki-card .card-footer {
+        margin-top: 32px;
+        display: flex;
+        align-items: center;
+        font-weight: 700;
+        font-size: 14px;
+        color: var(--wiki-accent);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .wiki-card .card-footer::after {
+        content: " →";
+        transition: transform 0.2s ease;
+      }
+
+      .wiki-card:hover .card-footer::after {
+        transform: translateX(4px);
+      }
+
+      .status-pill {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 100px;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        background: var(--bg-secondary);
+        color: var(--wiki-accent);
+        margin-bottom: 8px;
+      }
+
+      .featured-badge {
+        background: var(--bg-dark);
+        color: var(--white);
       }
     </style>
   </head>
@@ -63,59 +148,87 @@
       <div class="container nav-wrap">
         <a class="brand" href="../index.html">NextGenAI Institute</a>
         <div style="display: flex; gap: 24px; align-items: center;">
-            <a href="index.html" style="text-decoration: none; color: var(--accent-gold); font-weight: 700; font-size: 14px;">WIKI</a>
+            <a href="index.html" style="text-decoration: none; color: var(--wiki-accent); font-weight: 700; font-size: 14px;">WIKI</a>
             <a class="btn btn-primary" href="../index.html#final-cta">Book Strategy Call</a>
         </div>
       </div>
     </header>
 
-    <main id="main-content" class="container">
+    <main id="main-content">
       <section class="wiki-hero">
-        <p class="eyebrow">KNOWLEDGE BASE</p>
-        <h1>AI for Founders Wiki</h1>
-        <p class="lede">
-          A definitive resource for $5M–$50M founders to understand, architect, and install AI Operating Systems.
-        </p>
-      </section>
-
-      <section class="wiki-grid">
-        <a href="what-is-an-ai-os.html" class="wiki-card">
-          <p class="eyebrow">PILLAR 01</p>
-          <h3>What is an AI Operating System (AI OS)?</h3>
-          <p>
-            Understand the difference between isolated tools and an integrated system that removes the founder bottleneck.
+        <div class="container reveal">
+          <p class="eyebrow">THE ARCHIVE</p>
+          <h1>Founder's AI Playbook</h1>
+          <p class="lede" style="margin-left: auto; margin-right: auto; max-width: 600px;">
+            The definitive technical and operational library for $5M–$50M founders installing the AI Operating System.
           </p>
-        </a>
-
-        <a href="ceos-guide-to-ai-audits.html" class="wiki-card">
-          <p class="eyebrow">PILLAR 02</p>
-          <h3>The CEO's Guide to AI Audits</h3>
-          <p>How to map exactly where your hours are bleeding and identify high-ROI automation opportunities.</p>
-        </a>
-
-        <a href="case-study-logistics-ai.html" class="wiki-card">
-          <p class="eyebrow">CASE STUDY 01</p>
-          <h3>$214K Saved for a $12M Logistics Firm</h3>
-          <p>How an AI Operating System replaced manual bottlenecks and freed the CEO from the day-to-day operations.</p>
-        </a>
-
-        <a href="../ai-gap-calculator.html" class="wiki-card">
-          <p class="eyebrow">TOOL</p>
-          <h3>AI Gap Calculator</h3>
-          <p>Calculate the monthly cost of manual work in your business based on payroll and head count.</p>
-        </a>
-
-        <!-- Placeholder for future articles -->
-        <div class="wiki-card" style="opacity: 0.6; cursor: default;">
-          <p class="eyebrow">COMING SOON</p>
-          <h3>Scaling from $10M to $50M with AI</h3>
-          <p>The operational framework for high-growth founder exits.</p>
         </div>
       </section>
 
-      <footer class="wiki-footer">
-        <p>© 2025 NextGenAI Institute. All rights reserved.</p>
-      </footer>
+      <section class="container">
+        <div class="wiki-grid reveal">
+          <a href="what-is-an-ai-os.html" class="wiki-card">
+            <div>
+              <span class="status-pill featured-badge">PILLAR 01</span>
+              <h3>What is an AI Operating System (AI OS)?</h3>
+              <p>
+                Understand the difference between isolated AI tools and an integrated system that removes the founder bottleneck.
+              </p>
+            </div>
+            <div class="card-footer">Read Chapter</div>
+          </a>
+
+          <a href="ceos-guide-to-ai-audits.html" class="wiki-card">
+            <div>
+              <span class="status-pill">PILLAR 02</span>
+              <h3>The CEO's Guide to AI Audits</h3>
+              <p>
+                A step-by-step framework to map exactly where your hours are bleeding and identify high-ROI automation opportunities.
+              </p>
+            </div>
+            <div class="card-footer">Read Chapter</div>
+          </a>
+
+          <a href="case-study-logistics-ai.html" class="wiki-card">
+            <div>
+              <span class="status-pill">CASE STUDY</span>
+              <h3>$214K Saved in Year One</h3>
+              <p>
+                A deep dive into how a $12M logistics firm replaced three full-time roles with automated AI layers.
+              </p>
+            </div>
+            <div class="card-footer">View Outcome</div>
+          </a>
+
+          <a href="../ai-gap-calculator.html" class="wiki-card">
+            <div>
+              <span class="status-pill" style="background: #eef2ff; color: #4f46e5;">INTERACTIVE TOOL</span>
+              <h3>AI Gap Calculator</h3>
+              <p>
+                Calculate the real-time cost of manual work in your business based on payroll and headcount.
+              </p>
+            </div>
+            <div class="card-footer" style="color: #4f46e5;">Launch Tool</div>
+          </a>
+
+          <div class="wiki-card" style="opacity: 0.6; cursor: default;">
+            <div>
+              <span class="status-pill">COMING SOON</span>
+              <h3>Scaling to $50M with Layer 04</h3>
+              <p>
+                The operational framework for using autonomous reporting to drive high-growth founder exits.
+              </p>
+            </div>
+            <div class="card-footer" style="opacity: 0;">Locked</div>
+          </div>
+        </div>
+      </section>
     </main>
+
+    <footer class="container" style="text-align: center; padding: 60px 0; border-top: 1px solid var(--line); margin-top: 40px;">
+      <p>© 2025 NextGenAI Institute. All rights reserved.</p>
+    </footer>
+
+    <script src="../script.js"></script>
   </body>
 </html>
