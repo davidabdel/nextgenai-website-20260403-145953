@@ -22,7 +22,11 @@
 
 @layer base {
   body {
-    @apply bg-bg-primary text-text-primary font-sans antialiased;
+    @apply bg-bg-primary text-text-primary font-sans antialiased text-[15px] leading-[1.7];
+  }
+  
+  p, li, .text-sm, .text-xs {
+    @apply text-[15px] leading-[1.7];
   }
 }
 
@@ -51,6 +55,18 @@
   }
   .gold-underline:hover::after {
     width: 100%;
+  }
+
+  nav, header {
+    width: 100% !important;
+    max-width: 100% !important;
+    left: 0 !important;
+    right: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .container-inner {
+    @apply max-w-[1200px] mx-auto w-full px-6;
   }
 }
 

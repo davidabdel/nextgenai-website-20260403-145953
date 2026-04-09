@@ -43,7 +43,7 @@ const Navbar = () => {
 
   return (
     <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${isScrolled ? 'bg-bg-primary/90 backdrop-blur-md py-4 border-b border-border' : 'bg-transparent py-6'}`}>
-      <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
+      <div className="container-inner flex justify-between items-center px-6">
         <div className="flex items-center gap-3">
           <span className="font-serif text-2xl font-bold tracking-tight">NextGenAI</span>
           <div className="h-6 w-[1px] bg-border-gold hidden sm:block"></div>
@@ -174,17 +174,17 @@ const Hero = () => {
         initial={{ opacity: 0, x: 50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 1, delay: 0.8 }}
-        className="hidden lg:block absolute bottom-0 right-0 h-[85vh] w-1/3 z-0"
+        className="hidden lg:block absolute bottom-0 right-0 h-[90vh] w-[45%] z-0"
       >
         <div className="relative h-full w-full">
           <img 
-            src="https://picsum.photos/seed/founder-night/800/1200" 
+            src="/src/assets/hero-founder.png" 
             alt="Founder looking out window" 
-            className="h-full w-full object-cover object-center grayscale brightness-50"
+            className="h-full w-full object-cover object-left"
+            style={{ maskImage: 'linear-gradient(to right, transparent, black 25%)', WebkitMaskImage: 'linear-gradient(to right, transparent, black 25%)' }}
             referrerPolicy="no-referrer"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-bg-primary via-transparent to-transparent"></div>
-          <div className="absolute inset-0 bg-gradient-to-l from-transparent to-bg-primary"></div>
         </div>
       </motion.div>
 
@@ -248,14 +248,13 @@ const Problem = () => {
           </div>
 
           <div className="relative hidden lg:block">
-            <div className="aspect-[4/5] rounded-sm overflow-hidden border border-border">
+            <div className="aspect-[4/3] rounded-sm overflow-hidden border border-border">
               <img 
-                src="https://picsum.photos/seed/exhausted-founder/800/1000" 
+                src="/src/assets/problem-founder.png" 
                 alt="Operational overwhelm" 
-                className="w-full h-full object-cover grayscale brightness-75"
+                className="w-full h-full object-cover"
                 referrerPolicy="no-referrer"
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-bg-primary/40 to-transparent"></div>
             </div>
             <div className="absolute -bottom-10 -right-10 w-64 h-64 border border-accent-gold/20 -z-10"></div>
           </div>
@@ -369,11 +368,11 @@ const Testimonial = () => {
           "We replaced three full-time roles and saved $214,000 in the first year. I now spend 4 hours a week on operations instead of 40."
         </motion.p>
 
-        <div className="flex flex-col items-center gap-4 mb-20">
-          <div className="w-16 h-16 rounded-full overflow-hidden border border-accent-gold/30">
-            <img src="https://picsum.photos/seed/ceo-avatar/100/100" alt="CEO Avatar" referrerPolicy="no-referrer" />
+        <div className="flex flex-col items-center gap-6 mb-20">
+          <div className="w-[60px] h-[60px] rounded-full bg-[#1C1C1C] border border-accent-gold flex items-center justify-center">
+            <span className="font-serif text-[20px] font-bold text-accent-gold">JD</span>
           </div>
-          <span className="text-text-secondary font-medium tracking-wide">— CEO, $12M Logistics Company</span>
+          <span className="text-text-secondary text-[14px] font-medium tracking-wide">— CEO, $12M Logistics Company</span>
         </div>
 
         <div className="grid md:grid-cols-2 gap-8">
@@ -523,7 +522,7 @@ const Stack = () => {
     <section className="py-32">
       <div className="max-w-7xl mx-auto px-6">
         <span className="text-[11px] font-medium tracking-[0.2em] text-text-muted uppercase mb-6 block">04 / THE STACK</span>
-        <h2 className="text-4xl md:text-5xl font-serif font-bold mb-20">What gets installed <br /> inside your business.</h2>
+        <h2 className="text-4xl md:text-5xl font-serif font-bold text-text-primary mb-20">What gets installed <br /> inside your business.</h2>
 
         <div className="grid lg:grid-cols-2 gap-20 items-start">
           <div className="space-y-0">
@@ -622,7 +621,7 @@ const Philosophy = () => {
 const Urgency = () => {
   const [count, setCount] = useState(0);
   const [hasStarted, setHasStarted] = useState(false);
-  const target = 1400;
+  const target = 784;
 
   useEffect(() => {
     if (!hasStarted) return;
@@ -651,14 +650,19 @@ const Urgency = () => {
         viewport={{ once: true }}
         className="max-w-4xl mx-auto px-6"
       >
-        <span className="text-[11px] font-medium tracking-[0.2em] text-text-muted uppercase mb-12 block">THE COST OF WAITING</span>
+        <span className="text-[12px] font-medium tracking-[0.2em] text-accent-gold uppercase mb-12 block">THE COST OF WAITING TODAY</span>
         <p className="text-text-secondary text-lg mb-8">Every day you wait costs you approximately</p>
-        <div className="text-7xl md:text-9xl font-mono font-bold text-accent-gold mb-12">
-          ${count.toLocaleString()}
+        <div className="flex flex-col items-center gap-2 mb-12">
+          <div className="text-[96px] font-mono font-bold text-accent-gold leading-none">
+            ${count.toLocaleString()}
+          </div>
+          <span className="font-sans text-[18px] font-medium text-text-secondary">per day</span>
         </div>
-        <p className="text-text-muted text-lg">
-          That's what your competitors who've already installed AI are saving.
-        </p>
+        <div className="max-w-[500px] mx-auto">
+          <p className="text-text-secondary text-[16px] leading-relaxed">
+            That's what businesses who've already installed AI are saving every single day.
+          </p>
+        </div>
       </motion.div>
     </section>
   );
