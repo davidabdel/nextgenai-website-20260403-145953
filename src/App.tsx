@@ -337,15 +337,17 @@ const VideoSection = () => {
         <h2 className="text-4xl font-serif font-bold">See it in action.</h2>
       </div>
       
-      <div className="relative max-w-4xl mx-auto aspect-video bg-bg-card border border-accent-gold/30 rounded-sm overflow-hidden group cursor-pointer">
+      <div 
+        className="relative max-w-4xl mx-auto aspect-video bg-[#161616] border border-[#C9A84C]/40 rounded-sm overflow-hidden group cursor-pointer"
+        style={{ boxShadow: '0 0 40px rgba(201,168,76,0.08)' }}
+      >
         <div className="absolute inset-0 flex flex-col items-center justify-center gap-6 z-10">
-          <div className="w-20 h-20 rounded-full border border-accent-gold flex items-center justify-center bg-bg-primary/40 backdrop-blur-sm group-hover:scale-110 transition-transform duration-500">
-            <Play size={32} className="text-accent-gold fill-accent-gold ml-1" />
+          <div className="w-16 h-16 rounded-full border-2 border-[#C9A84C] flex items-center justify-center bg-bg-primary/40 backdrop-blur-sm group-hover:scale-110 transition-transform duration-500">
+            <Play size={28} className="text-accent-gold fill-accent-gold ml-1" />
           </div>
           <p className="text-text-secondary font-medium tracking-wide">2-minute walkthrough of a live AI OS install</p>
         </div>
         <div className="absolute inset-0 bg-accent-gold/5 group-hover:bg-accent-gold/10 transition-colors duration-500"></div>
-        <div className="absolute inset-0 shadow-[inset_0_0_100px_rgba(201,168,76,0.1)]"></div>
       </div>
     </section>
   );
@@ -374,15 +376,15 @@ const Testimonial = () => {
         </div>
 
         <div className="grid md:grid-cols-2 gap-8">
-          <div className="bg-bg-card p-8 border border-red-900/30 text-left">
-            <span className="text-[10px] font-bold tracking-[0.2em] text-red-500 uppercase mb-6 block">BEFORE</span>
+          <div className="bg-bg-card p-6 border border-red-900/30 text-left">
+            <span className="text-[11px] font-bold tracking-[0.15em] text-red-500 uppercase mb-6 block">BEFORE</span>
             <ul className="space-y-4">
               {[
                 "3 FTEs handling reporting and approvals",
                 "Owner reviewing 40+ items per week manually",
                 "Margins declining 3% year over year"
               ].map((item, i) => (
-                <li key={i} className="flex items-start gap-3 text-text-secondary text-sm">
+                <li key={i} className="flex items-start gap-3 text-text-secondary text-[14px]">
                   <X size={16} className="text-red-900 mt-0.5 shrink-0" />
                   <span>{item}</span>
                 </li>
@@ -390,15 +392,15 @@ const Testimonial = () => {
             </ul>
           </div>
 
-          <div className="bg-bg-card p-8 border border-accent-gold/30 text-left">
-            <span className="text-[10px] font-bold tracking-[0.2em] text-accent-gold uppercase mb-6 block">AFTER</span>
+          <div className="bg-bg-card p-6 border border-accent-gold/30 text-left">
+            <span className="text-[11px] font-bold tracking-[0.15em] text-accent-gold uppercase mb-6 block">AFTER</span>
             <ul className="space-y-4">
               {[
                 "Reporting fully automated — reviewed in 15 min",
                 "Owner decision load down 70%",
                 "Freed $214K reinvested into growth"
               ].map((item, i) => (
-                <li key={i} className="flex items-start gap-3 text-text-primary text-sm font-medium">
+                <li key={i} className="flex items-start gap-3 text-text-primary text-[14px] font-medium">
                   <Check size={16} className="text-accent-gold mt-0.5 shrink-0" />
                   <span>{item}</span>
                 </li>
