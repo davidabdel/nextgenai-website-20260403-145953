@@ -305,15 +305,13 @@ const Solution = () => {
           {steps.map((step, i) => (
             <motion.div 
               key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.2 }}
+              initial={{ opacity: 1 }}
+              animate={{ opacity: 1 }}
               className="relative z-10"
             >
-              <div className="text-6xl font-serif font-bold text-accent-gold mb-6">{step.num}</div>
-              <h3 className="text-xl font-bold mb-4 tracking-widest">{step.title}</h3>
-              <p className="text-text-secondary text-sm leading-relaxed">{step.desc}</p>
+              <div className={`text-6xl font-serif font-bold mb-6 ${i === 0 ? 'text-accent-gold-light' : 'text-accent-gold'}`}>{step.num}</div>
+              <h3 className="text-xl font-bold mb-4 tracking-widest text-text-primary">{step.title}</h3>
+              <p className="text-text-secondary text-[15px] leading-relaxed opacity-100">{step.desc}</p>
             </motion.div>
           ))}
         </div>
@@ -546,15 +544,14 @@ const Stack = () => {
           </div>
 
           <div className="sticky top-32 hidden lg:block">
-            <div className="aspect-[4/5] rounded-sm overflow-hidden border border-border">
+            <div className="aspect-[4/3] rounded-sm overflow-hidden border border-border bg-bg-card">
               <img 
-                src="https://picsum.photos/seed/operator-dash/800/1000" 
+                src="/assets/stack-operator.png" 
                 alt="AI powered operations" 
-                className="w-full h-full object-cover grayscale brightness-75"
+                className="w-full h-full object-cover"
                 referrerPolicy="no-referrer"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-bg-primary via-transparent to-transparent"></div>
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-accent-blue/5"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-bg-primary/40 via-transparent to-transparent"></div>
             </div>
           </div>
         </div>
@@ -759,11 +756,11 @@ const FinalCTA = ({ onShowSuccess }: { onShowSuccess: () => void }) => {
   };
 
   return (
-    <section id="final-cta" className="py-32 relative overflow-hidden">
+    <section id="final-cta" className="pt-[140px] pb-32 relative overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-accent-gold/30 to-transparent"></div>
       
-      <div className="max-w-4xl mx-auto px-6 text-center mb-20">
-        <h2 className="text-4xl md:text-6xl font-serif font-bold mb-8">Every week you wait, <br /> your competitors catch up.</h2>
+      <div className="max-w-4xl mx-auto px-6 text-center mb-20 relative z-10">
+        <h2 className="text-4xl md:text-6xl font-serif font-bold mb-8 relative z-10">Every week you wait, <br /> your competitors catch up.</h2>
         <p className="text-text-secondary text-lg max-w-xl mx-auto">
           30-minute strategy call. No pitch deck. No fluff. We'll show you exactly where AI can cut your overhead — or we'll tell you it can't.
         </p>
