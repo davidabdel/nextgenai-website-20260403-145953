@@ -356,7 +356,7 @@ const VideoSection = () => {
           </>
         ) : (
           <video 
-            src="/0409.mp4" 
+            src="https://assets.cdn.filesafe.space/Mf8u8bZ4PRZbFQBuWPoH/media/69d73204ebf1a60843596e8f.mp4" 
             controls 
             autoPlay 
             className="w-full h-full"
