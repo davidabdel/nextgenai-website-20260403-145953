@@ -51,14 +51,14 @@ const Navbar = ({ onNavigate, currentPage }: { onNavigate: (page: string) => voi
 
   return (
     <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${isScrolled ? 'bg-bg-primary/90 backdrop-blur-md py-4 border-b border-border' : 'bg-transparent py-6'}`}>
-      <div className=\"container-inner flex justify-between items-center px-6\">
-        <div className=\"flex items-center gap-3 cursor-pointer\" onClick={() => onNavigate('home')}>
-          <span className=\"font-serif text-2xl font-bold tracking-tight\">NextGenAI</span>
-          <div className=\"h-6 w-[1px] bg-border-gold hidden sm:block\"></div>
-          <span className=\"text-[10px] uppercase tracking-[0.2em] text-text-secondary hidden sm:block\">Institute</span>
+      <div className="container-inner flex justify-between items-center px-6">
+        <div className="flex items-center gap-3 cursor-pointer" onClick={() => onNavigate('home')}>
+          <span className="font-serif text-2xl font-bold tracking-tight">NextGenAI</span>
+          <div className="h-6 w-[1px] bg-border-gold hidden sm:block"></div>
+          <span className="text-[10px] uppercase tracking-[0.2em] text-text-secondary hidden sm:block">Institute</span>
         </div>
 
-        <div className=\"hidden md:flex items-center gap-8\">
+        <div className="hidden md:flex items-center gap-8">
           <button 
             onClick={() => onNavigate('wiki')}
             className={`text-sm font-medium tracking-wide transition-all duration-300 ${currentPage.startsWith('wiki') ? 'text-accent-gold' : 'text-text-secondary hover:text-accent-gold'}`}
@@ -67,13 +67,13 @@ const Navbar = ({ onNavigate, currentPage }: { onNavigate: (page: string) => voi
           </button>
           <button 
             onClick={scrollToCTA}
-            className=\"px-6 py-2 border border-accent-gold text-accent-gold text-sm font-medium tracking-wide hover:bg-accent-gold hover:text-bg-primary transition-all duration-300\"
+            className="px-6 py-2 border border-accent-gold text-accent-gold text-sm font-medium tracking-wide hover:bg-accent-gold hover:text-bg-primary transition-all duration-300"
           >
             Book a Call
           </button>
         </div>
 
-        <button className=\"md:hidden text-accent-gold\" onClick={() => setIsMobileMenuOpen(true)}>
+        <button className="md:hidden text-accent-gold" onClick={() => setIsMobileMenuOpen(true)}>
           <Menu size={24} />
         </button>
       </div>
@@ -84,21 +84,21 @@ const Navbar = ({ onNavigate, currentPage }: { onNavigate: (page: string) => voi
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className=\"fixed inset-0 bg-bg-primary z-[60] flex flex-col items-center justify-center gap-8\"
+            className="fixed inset-0 bg-bg-primary z-[60] flex flex-col items-center justify-center gap-8"
           >
-            <button className=\"absolute top-6 right-6 text-accent-gold\" onClick={() => setIsMobileMenuOpen(false)}>
+            <button className="absolute top-6 right-6 text-accent-gold" onClick={() => setIsMobileMenuOpen(false)}>
               <X size={32} />
             </button>
-            <span className=\"font-serif text-4xl font-bold\" onClick={() => onNavigate('home')}>NextGenAI</span>
+            <span className="font-serif text-4xl font-bold" onClick={() => onNavigate('home')}>NextGenAI</span>
             <button 
               onClick={() => onNavigate('wiki')}
-              className=\"text-lg font-medium tracking-widest text-accent-gold\"
+              className="text-lg font-medium tracking-widest text-accent-gold"
             >
               WIKI
             </button>
             <button 
               onClick={scrollToCTA}
-              className=\"px-10 py-4 border border-accent-gold text-accent-gold text-lg font-medium tracking-widest\"
+              className="px-10 py-4 border border-accent-gold text-accent-gold text-lg font-medium tracking-widest"
             >
               BOOK A CALL
             </button>
