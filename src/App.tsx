@@ -331,6 +331,8 @@ const Solution = () => {
 };
 
 const VideoSection = () => {
+  const [isPlaying, setIsPlaying] = useState(false);
+
   return (
     <section className="py-24 max-w-7xl mx-auto px-6">
       <div className="text-center mb-16">
@@ -338,16 +340,28 @@ const VideoSection = () => {
       </div>
       
       <div 
+        onClick={() => setIsPlaying(true)}
         className="relative max-w-4xl mx-auto aspect-video bg-[#161616] border border-[#C9A84C]/40 rounded-sm overflow-hidden group cursor-pointer"
         style={{ boxShadow: '0 0 40px rgba(201,168,76,0.08)' }}
       >
-        <div className="absolute inset-0 flex flex-col items-center justify-center gap-6 z-10">
-          <div className="w-16 h-16 rounded-full border-2 border-[#C9A84C] flex items-center justify-center bg-bg-primary/40 backdrop-blur-sm group-hover:scale-110 transition-transform duration-500">
-            <Play size={28} className="text-accent-gold fill-accent-gold ml-1" />
-          </div>
-          <p className="text-text-secondary font-medium tracking-wide">2-minute walkthrough of a live AI OS install</p>
-        </div>
-        <div className="absolute inset-0 bg-accent-gold/5 group-hover:bg-accent-gold/10 transition-colors duration-500"></div>
+        {!isPlaying ? (
+          <>
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-6 z-10">
+              <div className="w-16 h-16 rounded-full border-2 border-[#C9A84C] flex items-center justify-center bg-bg-primary/40 backdrop-blur-sm group-hover:scale-110 transition-transform duration-500">
+                <Play size={28} className="text-accent-gold fill-accent-gold ml-1" />
+              </div>
+              <p className="text-text-secondary font-medium tracking-wide">2-minute walkthrough of a live AI OS install</p>
+            </div>
+            <div className="absolute inset-0 bg-accent-gold/5 group-hover:bg-accent-gold/10 transition-colors duration-500"></div>
+          </>
+        ) : (
+          <video 
+            src="/0409.mp4" 
+            controls 
+            autoPlay 
+            className="w-full h-full"
+          />
+        )}
       </div>
     </section>
   );
