@@ -9,7 +9,7 @@ export const WikiIndex = ({ onNavigate }: { onNavigate: (page: string) => void }
       pill: 'TECHNICAL BRIEF',
       title: 'Vertical AI Agents for M&A Due Diligence',
       desc: 'How vertical AI agents are collapsing the due diligence timeline from weeks to hours.',
-      icon: <Brain size=24 />,
+      icon: <Brain size={24} />,
       type: 'pillar'
     },
     {
@@ -149,7 +149,7 @@ export const WikiArticle = ({ id, onBack }: { id: string; onBack: () => void }) 
       sections: [
         {
           type: 'text',
-          content: 'When founders of $5M–$50M companies hear \"AI,\" they often think of ChatGPT, Zapier, or a new piece of software. They buy a tool to solve a specific problem, and then another, and then another.'
+          content: 'When founders of $5M–$50M companies hear "AI," they often think of ChatGPT, Zapier, or a new piece of software. They buy a tool to solve a specific problem, and then another, and then another.'
         },
         {
           type: 'text',
@@ -169,12 +169,12 @@ export const WikiArticle = ({ id, onBack }: { id: string; onBack: () => void }) 
     },
     'ceos-guide-to-ai-audits': {
       pill: 'PILLAR 02',
-      title: \"The CEO's Guide to AI Audits\",
+      title: "The CEO's Guide to AI Audits",
       lede: 'How to map exactly where your hours are bleeding and identify high-ROI automation opportunities.',
       sections: [
         {
           type: 'text',
-          content: 'Most founders doing $10M–$20M a year know they have an efficiency problem. They feel it in the 14-hour workdays, the declining margins, and the constant \"check-ins\" from staff.'
+          content: 'Most founders doing $10M–$20M a year know they have an efficiency problem. They feel it in the 14-hour workdays, the declining margins, and the constant "check-ins" from staff.'
         },
         {
           type: 'text',
@@ -183,7 +183,7 @@ export const WikiArticle = ({ id, onBack }: { id: string; onBack: () => void }) 
         {
           type: 'callout',
           title: 'The 70/30 Rule',
-          content: 'In a typical $12M service or logistics company, 30% of all staff time is spent on tasks that are 100% automatable today. This is the \"AI Gap.\"'
+          content: 'In a typical $12M service or logistics company, 30% of all staff time is spent on tasks that are 100% automatable today. This is the "AI Gap."'
         }
       ]
     },
@@ -211,7 +211,7 @@ export const WikiArticle = ({ id, onBack }: { id: string; onBack: () => void }) 
       <div className="container-inner max-w-3xl">
         <button 
           onClick={onBack}
-          className=\"flex items-center gap-2 text-accent-gold font-bold text-[10px] tracking-widest uppercase mb-12 hover:translate-x-[-4px] transition-transform\"
+          className="flex items-center gap-2 text-accent-gold font-bold text-[10px] tracking-widest uppercase mb-12 hover:translate-x-[-4px] transition-transform"
         >
           <ChevronLeft size={14} /> Back to Playbook
         </button>
@@ -220,34 +220,34 @@ export const WikiArticle = ({ id, onBack }: { id: string; onBack: () => void }) 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          <span className=\"text-[11px] font-medium tracking-[0.3em] text-accent-gold uppercase mb-6 block\">{article.pill}</span>
-          <h1 className=\"text-4xl md:text-5xl font-serif font-bold mb-8 leading-tight\">{article.title}</h1>
-          <p className=\"text-xl text-text-primary/90 font-medium leading-relaxed mb-12 border-l-2 border-accent-gold/30 pl-8\">
+          <span className="text-[11px] font-medium tracking-[0.3em] text-accent-gold uppercase mb-6 block">{article.pill}</span>
+          <h1 className="text-4xl md:text-5xl font-serif font-bold mb-8 leading-tight">{article.title}</h1>
+          <p className="text-xl text-text-primary/90 font-medium leading-relaxed mb-12 border-l-2 border-accent-gold/30 pl-8">
             {article.lede}
           </p>
 
-          <div className=\"space-y-8 text-text-secondary text-lg leading-relaxed\">
+          <div className="space-y-8 text-text-secondary text-lg leading-relaxed">
             {article.sections.map((section: any, i: number) => (
               section.type === 'text' ? (
                 <p key={i}>{section.content}</p>
               ) : (
-                <div key={i} className=\"bg-bg-card p-8 border border-border/50 rounded-sm\">
-                  <h3 className=\"text-accent-gold font-bold text-sm tracking-widest uppercase mb-4\">{section.title}</h3>
-                  <p className=\"text-text-primary text-base\">{section.content}</p>
+                <div key={i} className="bg-bg-card p-8 border border-border/50 rounded-sm">
+                  <h3 className="text-accent-gold font-bold text-sm tracking-widest uppercase mb-4">{section.title}</h3>
+                  <p className="text-text-primary text-base">{section.content}</p>
                 </div>
               )
             ))}
           </div>
 
-          <div className=\"mt-20 pt-10 border-t border-border flex flex-col items-center text-center\">
-            <h2 className=\"text-2xl font-serif font-bold mb-4 text-text-primary\">Ready to close the gap?</h2>
-            <p className=\"text-text-secondary text-sm mb-8 max-w-sm\">Schedule a 30-minute strategy call. We'll show you exactly where AI can cut your overhead.</p>
+          <div className="mt-20 pt-10 border-t border-border flex flex-col items-center text-center">
+            <h2 className="text-2xl font-serif font-bold mb-4 text-text-primary">Ready to close the gap?</h2>
+            <p className="text-text-secondary text-sm mb-8 max-w-sm">Schedule a 30-minute strategy call. We'll show you exactly where AI can cut your overhead.</p>
             <button 
               onClick={() => {
                 onBack();
                 setTimeout(() => document.getElementById('final-cta')?.scrollIntoView({ behavior: 'smooth' }), 100);
               }}
-              className=\"px-8 py-4 bg-accent-gold text-bg-primary font-bold tracking-widest hover:bg-accent-gold-light transition-all duration-300 shadow-lg\"
+              className="px-8 py-4 bg-accent-gold text-bg-primary font-bold tracking-widest hover:bg-accent-gold-light transition-all duration-300 shadow-lg"
             >
               BOOK STRATEGY CALL
             </button>
