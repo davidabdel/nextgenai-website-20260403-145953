@@ -1,120 +1,225 @@
-import os
-import json
-import re
 import datetime
-from hermes_tools import terminal, read_file, write_file, patch
+import os
+import re
+import subprocess
+from typing import Iterable
 
 # --- Configuration ---
 PROJECT_ROOT = "/root/nextgenai"
 WIKI_COMPONENTS_PATH = os.path.join(PROJECT_ROOT, "src/WikiComponents.tsx")
 SITEMAP_PATH = os.path.join(PROJECT_ROOT, "public/sitemap.xml")
+BASE_URL = "https://nextgenai.institute"
 
-def generate_article_text(topic, existing_pages):
-    # Technical, authoritative, jargon-aware
-    # Avoids slop
-    lede = f"How vertical AI agents are collapsing the due diligence timeline from weeks to hours by automating the technical and financial audit layers."
-    
-    section1 = "For founders of $10M–$50M companies, the M&A process is often the most significant bottleneck in their career. Traditional due diligence relies on manual reviews of thousands of documents—a process that is slow, expensive, and prone to human error."
-    
-    section2 = "Vertical agents don't just search; they synthesize. They map codebases to technical debt, verify revenue recognition against contracts, and flag operational risks before the first LOI is even signed."
-    
-    # Internal linking logic
-    text = f"{lede}\n\n{section1}\n\n{section2}"
-    
-    for page in existing_pages:
-        # Simple auto-linking: if the title or keywords appear, link it
-        if page['id'] == 'what-is-an-ai-os':
-            text += f"\n\nThis is a core component of the [AI Operating System](/wiki/{page['id']})."
-        elif page['id'] == 'ceos-guide-to-ai-audits':
-            text += f"\n\nBefore implementing this, see the [CEO's Guide to AI Audits](/wiki/{page['id']})."
-            
-    return text
 
-def generate_wiki_article():
-    print("Step 1: Researching trending AI topics for founders...")
-    topic = "Vertical AI Agents for M&A Due Diligence"
-    
-    print(f"Step 2: Drafting article for '{topic}'...")
-    article_id = re.sub(r'[^a-z0-9]+', '-', topic.lower())
-    
-    existing_pages = [
-        {"id": "what-is-an-ai-os", "title": "What is an AI OS"},
-        {"id": "ceos-guide-to-ai-audits", "title": "The CEO's Guide to AI Audits"}
+def slugify_topic(topic: str) -> str:
+    return re.sub(r"[^a-z0-9]+", "-", topic.lower()).strip("-")
+
+
+def extract_existing_article_ids(wiki_content: str) -> set[str]:
+    match = re.search(r"const articles = \[(.*?)\];", wiki_content, re.DOTALL)
+    if not match:
+        return set()
+    return set(re.findall(r"id:\s*'([^']+)'", match.group(1)))
+
+
+def extract_existing_pages(wiki_content: str) -> list[dict[str, str]]:
+    article_block = re.search(r"const articles = \[(.*?)\];", wiki_content, re.DOTALL)
+    if not article_block:
+        return []
+
+    entries = re.findall(
+        r"\{\s*id:\s*'([^']+)'\s*,\s*pill:\s*'[^']*'\s*,\s*title:\s*('(?:[^'\\]|\\.)*'|\"(?:[^\"\\]|\\.)*\")",
+        article_block.group(1),
+        re.DOTALL,
+    )
+
+    pages = []
+    for page_id, title_literal in entries:
+        title = title_literal[1:-1]
+        pages.append({"id": page_id, "title": title})
+    return pages
+
+
+def get_trending_or_founder_topics() -> list[str]:
+    # No external web-search dependency in this runtime. Use founder-high-value topics.
+    return [
+        "AI Revenue Ops Command Centers",
+        "Private LLM Stack for Regulated Mid-Market Teams",
+        "Agentic FP&A for Weekly Cashflow Command",
+        "Voice AI for Founder-Led Sales Orchestration",
+        "AI Margin Expansion Systems for Service Businesses",
     ]
-    
-    full_text = generate_article_text(topic, existing_pages)
-    # Split text into sections for the UI component
-    text_blocks = full_text.split("\n\n")
-    sections = []
-    for block in text_blocks:
-        sections.append({"type": "text", "content": block})
 
-    new_article_content = {
-        "pill": "TECHNICAL BRIEF",
+
+def pick_topic(existing_ids: set[str]) -> tuple[str, str]:
+    for topic in get_trending_or_founder_topics():
+        article_id = slugify_topic(topic)
+        if article_id not in existing_ids:
+            return topic, article_id
+    date_suffix = datetime.datetime.now().strftime("%Y%m%d")
+    fallback_topic = f"Founder AI Operating Cadence {date_suffix}"
+    return fallback_topic, slugify_topic(fallback_topic)
+
+
+def generate_article_text(topic: str, existing_pages: list[dict[str, str]]) -> str:
+    blocks = [
+        f"{topic} is becoming the control layer for founders who need board-level clarity without adding management drag.",
+        "In a $5M–$50M company, the failure mode is rarely effort. It is fragmented decisions across revenue, hiring, delivery, and finance. A premium AI system should tighten feedback loops, expose constraint metrics, and reduce time-to-decision from days to minutes.",
+        "The winning pattern is technical but practical: event-level data pipelines, role-aware copilots, and operating rituals that force weekly execution discipline. Founders do not need more dashboards. They need an execution membrane that converts signal into accountable action.",
+        "If you architect this correctly, you get compounding leverage: fewer status meetings, faster margin correction, and cleaner diligence readiness when capital or acquisition conversations start.",
+    ]
+
+    page_ids = {p["id"] for p in existing_pages}
+    if "what-is-an-ai-os" in page_ids:
+        blocks.append("Start with the architecture model in [What is an AI Operating System (AI OS)?](/wiki/what-is-an-ai-os) to define system boundaries.")
+    if "ceos-guide-to-ai-audits" in page_ids:
+        blocks.append("Then run the baseline assessment from [The CEO's Guide to AI Audits](/wiki/ceos-guide-to-ai-audits) to quantify your first 90-day automation targets.")
+
+    return "\n\n".join(blocks)
+
+
+def make_article_payload(topic: str, body_text: str) -> dict:
+    sections = [{"type": "text", "content": block} for block in body_text.split("\n\n") if block.strip()]
+    return {
+        "pill": "FOUNDERS PLAYBOOK",
         "title": topic,
-        "lede": "How vertical AI agents are collapsing the due diligence timeline from weeks to hours.",
-        "sections": sections
+        "lede": "A premium operating brief for founders building durable AI leverage.",
+        "desc": "How to implement technical AI systems that improve speed, margin, and governance.",
+        "sections": sections,
     }
-    print("Step 3: Injecting into WikiComponents.tsx...")
-    wiki_file = read_file(WIKI_COMPONENTS_PATH)
-    content_str = wiki_file["content"]
-    
-    # 1. Update the 'articles' array in WikiIndex
-    # We find the end of the articles array
-    articles_match = re.search(r'const articles = \[(.*?)\];', content_str, re.DOTALL)
-    if articles_match:
-        old_articles_list = articles_match.group(1)
-        new_entry = f"""    {{
+
+
+def _inject_into_articles_block(content: str, article_id: str, payload: dict) -> str:
+    articles_match = re.search(r"const articles = \[(.*?)\n  \];", content, re.DOTALL)
+    if not articles_match:
+        raise RuntimeError("Could not find articles array in WikiComponents.tsx")
+
+    old_articles_list = articles_match.group(1)
+    if f"id: '{article_id}'" in old_articles_list:
+        return content
+
+    new_entry = f"""
+    {{
       id: '{article_id}',
-      pill: '{new_article_content["pill"]}',
-      title: '{new_article_content["title"]}',
-      desc: '{new_article_content["lede"]}',
-      icon: <Brain size={24} />,\n      type: 'pillar'
+      pill: '{payload['pill']}',
+      title: '{payload['title']}',
+      desc: '{payload['desc']}',
+      icon: <Brain size={{24}} />,
+      type: 'pillar'
     }},"""
-        updated_articles = old_articles_list + "\n" + new_entry
-        content_str = content_str.replace(old_articles_list, updated_articles)
 
-    # 2. Update the 'content' record in WikiArticle
-    content_record_match = re.search(r'const content: Record<string, any> = \{(.*?)\n  \};', content_str, re.DOTALL)
-    if content_record_match:
-        old_record = content_record_match.group(1)
-        new_record_entry = f"""    '{article_id}': {{
-      pill: '{new_article_content["pill"]}',
-      title: '{new_article_content["title"]}',
-      lede: '{new_article_content["lede"]}',
-      sections: {json.dumps(new_article_content["sections"], indent=8)}
-    }},"""
-        updated_record = old_record + "\n" + new_record_entry
-        content_str = content_str.replace(old_record, updated_record)
-        
-    write_file(WIKI_COMPONENTS_PATH, content_str)
-    return article_id
+    updated_articles = new_entry + old_articles_list
+    return content.replace(old_articles_list, updated_articles, 1)
 
-def update_sitemap(new_id):
-    print("Step 4: Updating sitemap.xml...")
-    # Simple sitemap generation
-    # In production, we'd list all routes, but for now, we'll ensure the file exists and has the new entry.
-    date = datetime.datetime.now().strftime("%Y-%m-%d")
-    sitemap_content = f"""<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://nextgenai.institute/</loc><lastmod>{date}</lastmod></url>
-  <url><loc>https://nextgenai.institute/wiki</loc><lastmod>{date}</lastmod></url>
-  <url><loc>https://nextgenai.institute/wiki/{new_id}</loc><lastmod>{date}</lastmod></url>
-</urlset>"""
-    write_file(SITEMAP_PATH, sitemap_content)
 
-def push_to_git(article_id):
-    print("Step 5: Pushing to Git...")
-    terminal(f"git add .", workdir=PROJECT_ROOT)
-    terminal(f"git commit -m 'seo: auto-generate wiki article on {article_id}'", workdir=PROJECT_ROOT)
-    # terminal(f"git push origin main", workdir=PROJECT_ROOT) # Commented out for safety during setup
-    print("Changes committed locally.")
+def _inject_into_content_record(content: str, article_id: str, payload: dict) -> str:
+    record_match = re.search(r"const content: Record<string, any> = \{(.*?)\n  \};", content, re.DOTALL)
+    if not record_match:
+        raise RuntimeError("Could not find content record in WikiComponents.tsx")
+
+    old_record = record_match.group(1)
+    if f"'{article_id}':" in old_record:
+        return content
+
+    section_lines = []
+    for section in payload["sections"]:
+        section_lines.append(
+            "        {\n"
+            "          type: 'text',\n"
+            f"          content: {repr(section['content'])}\n"
+            "        }"
+        )
+
+    new_record_entry = (
+        f"\n    '{article_id}': {{\n"
+        f"      pill: '{payload['pill']}',\n"
+        f"      title: '{payload['title']}',\n"
+        f"      lede: '{payload['lede']}',\n"
+        "      sections: [\n"
+        + ",\n".join(section_lines)
+        + "\n      ]\n"
+        "    },"
+    )
+
+    updated_record = new_record_entry + old_record
+    return content.replace(old_record, updated_record, 1)
+
+
+def update_wiki_components() -> tuple[str, list[str]]:
+    with open(WIKI_COMPONENTS_PATH, "r", encoding="utf-8") as f:
+        original = f.read()
+
+    existing_ids = extract_existing_article_ids(original)
+    existing_pages = extract_existing_pages(original)
+    topic, article_id = pick_topic(existing_ids)
+
+    body = generate_article_text(topic, existing_pages)
+    payload = make_article_payload(topic, body)
+
+    updated = _inject_into_articles_block(original, article_id, payload)
+    updated = _inject_into_content_record(updated, article_id, payload)
+
+    with open(WIKI_COMPONENTS_PATH, "w", encoding="utf-8") as f:
+        f.write(updated)
+
+    all_ids = extract_existing_article_ids(updated)
+    return article_id, sorted(all_ids)
+
+
+def build_sitemap_xml(article_ids: Iterable[str], date_str: str) -> str:
+    static_urls = [
+        f"{BASE_URL}/",
+        f"{BASE_URL}/wiki",
+    ]
+    wiki_urls = [f"{BASE_URL}/wiki/{article_id}" for article_id in sorted(set(article_ids))]
+    all_urls = static_urls + wiki_urls
+
+    lines = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+    for url in all_urls:
+        lines.append(f"  <url><loc>{url}</loc><lastmod>{date_str}</lastmod></url>")
+    lines.append("</urlset>")
+    return "\n".join(lines)
+
+
+def update_sitemap(article_ids: list[str]) -> None:
+    today = datetime.datetime.now().strftime("%Y-%m-%d")
+    xml = build_sitemap_xml(article_ids, today)
+    with open(SITEMAP_PATH, "w", encoding="utf-8") as f:
+        f.write(xml)
+
+
+def run_git(command: list[str]) -> subprocess.CompletedProcess:
+    return subprocess.run(command, cwd=PROJECT_ROOT, text=True, capture_output=True)
+
+
+def commit_and_push(article_id: str) -> None:
+    run_git(["git", "checkout", "main"])
+    add_result = run_git(["git", "add", "scripts/seo_automation.py", "src/WikiComponents.tsx", "public/sitemap.xml", "tests/test_seo_automation.py", "tests/test_content_generation.py"])
+    if add_result.returncode != 0:
+        raise RuntimeError(add_result.stderr.strip() or "git add failed")
+
+    commit_result = run_git(["git", "commit", "-m", f"seo: auto-generate wiki article on {article_id}"])
+    if commit_result.returncode != 0 and "nothing to commit" not in commit_result.stdout.lower():
+        raise RuntimeError(commit_result.stderr.strip() or commit_result.stdout.strip() or "git commit failed")
+
+    push_result = run_git(["git", "push", "origin", "main"])
+    if push_result.returncode != 0:
+        raise RuntimeError(push_result.stderr.strip() or "git push failed")
+
+
+def main() -> None:
+    print("Step 1: Researching trending AI topics (founder-priority fallback set)...")
+    print("Step 2: Generating new wiki article in Founders Playbook voice...")
+    article_id, all_ids = update_wiki_components()
+
+    print("Step 3: Updating sitemap.xml...")
+    update_sitemap(all_ids)
+
+    print("Step 4: Committing and pushing to main...")
+    commit_and_push(article_id)
+
+    print(f"Successfully automated SEO update for: {article_id}")
+
 
 if __name__ == "__main__":
-    try:
-        new_id = generate_wiki_article()
-        update_sitemap(new_id)
-        push_to_git(new_id)
-        print(f"Successfully automated SEO update for: {new_id}")
-    except Exception as e:
-        print(f"Error: {e}")
+    main()
