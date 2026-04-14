@@ -5,6 +5,14 @@ import { ArrowRight, BookOpen, Clock, Users, Zap, Brain, BarChart3, ChevronLeft 
 export const WikiIndex = ({ onNavigate }: { onNavigate: (page: string) => void }) => {
   const articles = [
     {
+      id: 'voice-ai-for-founder-led-sales-orchestration',
+      pill: 'FOUNDERS PLAYBOOK',
+      title: 'Voice AI for Founder-Led Sales Orchestration',
+      desc: 'How to implement technical AI systems that improve speed, margin, and governance.',
+      icon: <Brain size={24} />,
+      type: 'pillar'
+    },
+    {
       id: 'agentic-fp-a-for-weekly-cashflow-command',
       pill: 'FOUNDERS PLAYBOOK',
       title: 'Agentic FP&A for Weekly Cashflow Command',
@@ -139,6 +147,37 @@ export const WikiIndex = ({ onNavigate }: { onNavigate: (page: string) => void }
 
 export const WikiArticle = ({ id, onBack }: { id: string; onBack: () => void }) => {
   const content: Record<string, any> = {
+    'voice-ai-for-founder-led-sales-orchestration': {
+      pill: 'FOUNDERS PLAYBOOK',
+      title: 'Voice AI for Founder-Led Sales Orchestration',
+      lede: 'A premium operating brief for founders building durable AI leverage.',
+      sections: [
+        {
+          type: 'text',
+          content: 'Voice AI for Founder-Led Sales Orchestration is becoming the control layer for founders who need board-level clarity without adding management drag.'
+        },
+        {
+          type: 'text',
+          content: 'In a $5M–$50M company, the failure mode is rarely effort. It is fragmented decisions across revenue, hiring, delivery, and finance. A premium AI system should tighten feedback loops, expose constraint metrics, and reduce time-to-decision from days to minutes.'
+        },
+        {
+          type: 'text',
+          content: 'The winning pattern is technical but practical: event-level data pipelines, role-aware copilots, and operating rituals that force weekly execution discipline. Founders do not need more dashboards. They need an execution membrane that converts signal into accountable action.'
+        },
+        {
+          type: 'text',
+          content: 'If you architect this correctly, you get compounding leverage: fewer status meetings, faster margin correction, and cleaner diligence readiness when capital or acquisition conversations start.'
+        },
+        {
+          type: 'text',
+          content: 'Start with the architecture model in [What is an AI Operating System (AI OS)?](/wiki/what-is-an-ai-os) to define system boundaries.'
+        },
+        {
+          type: 'text',
+          content: "Then run the baseline assessment from [The CEO's Guide to AI Audits](/wiki/ceos-guide-to-ai-audits) to quantify your first 90-day automation targets."
+        }
+      ]
+    },
     'agentic-fp-a-for-weekly-cashflow-command': {
       pill: 'FOUNDERS PLAYBOOK',
       title: 'Agentic FP&A for Weekly Cashflow Command',
