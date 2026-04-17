@@ -62,18 +62,24 @@ def pick_topic(existing_ids: set[str]) -> tuple[str, str]:
 
 
 def generate_article_text(topic: str, existing_pages: list[dict[str, str]]) -> str:
+    # Technical but accessible 'humanizer' persona
     blocks = [
-        f"{topic} is becoming the control layer for founders who need board-level clarity without adding management drag.",
-        "In a $5M–$50M company, the failure mode is rarely effort. It is fragmented decisions across revenue, hiring, delivery, and finance. A premium AI system should tighten feedback loops, expose constraint metrics, and reduce time-to-decision from days to minutes.",
-        "The winning pattern is technical but practical: event-level data pipelines, role-aware copilots, and operating rituals that force weekly execution discipline. Founders do not need more dashboards. They need an execution membrane that converts signal into accountable action.",
-        "If you architect this correctly, you get compounding leverage: fewer status meetings, faster margin correction, and cleaner diligence readiness when capital or acquisition conversations start.",
+        f"{topic} represents the next evolution of the founder's operating system—moving beyond simple task automation into true cognitive leverage.",
+        "For founders scaling past $10M, the bottleneck is rarely talent; it is the latency between signal and action. When your revenue data lives in one silo and your operational capacity in another, you aren't running a business—you're managing a series of expensive guesses.",
+        "A premium AI implementation doesn't just 'do work'; it collapses the distance between your strategic intent and the execution layer. By installing event-driven data listeners and role-specific agentic loops, you convert passive monitoring into active governance. This is how you reclaim 20+ hours a week while improving decision quality.",
+        "This isn't about replacing your team; it's about upgrading their operating environment so they can execute at 10x speed without the 10x burnout.",
     ]
 
     page_ids = {p["id"] for p in existing_pages}
+    # Auto-link logic for key pillars
+    links = []
     if "what-is-an-ai-os" in page_ids:
-        blocks.append("Start with the architecture model in [What is an AI Operating System (AI OS)?](/wiki/what-is-an-ai-os) to define system boundaries.")
+        links.append("This framework integrates directly with your [AI Operating System (AI OS)](/wiki/what-is-an-ai-os).")
     if "ceos-guide-to-ai-audits" in page_ids:
-        blocks.append("Then run the baseline assessment from [The CEO's Guide to AI Audits](/wiki/ceos-guide-to-ai-audits) to quantify your first 90-day automation targets.")
+        links.append("Before deployment, ensure you've completed the baseline [AI Audit](/wiki/ceos-guide-to-ai-audits) to identify your highest-leverage bottlenecks.")
+    
+    if links:
+        blocks.append(" ".join(links))
 
     return "\n\n".join(blocks)
 
@@ -202,9 +208,14 @@ def commit_and_push(article_id: str) -> None:
     if commit_result.returncode != 0 and "nothing to commit" not in commit_result.stdout.lower():
         raise RuntimeError(commit_result.stderr.strip() or commit_result.stdout.strip() or "git commit failed")
 
-    push_result = run_git(["git", "push", "origin", "main"])
-    if push_result.returncode != 0:
-        raise RuntimeError(push_result.stderr.strip() or "git push failed")
+    # PUSH TO BOTH main AND feature/webhook-integration
+    push_main = run_git(["git", "push", "origin", "main"])
+    if push_main.returncode != 0:
+        raise RuntimeError(push_main.stderr.strip() or "git push main failed")
+
+    push_feature = run_git(["git", "push", "origin", "main:feature/webhook-integration"])
+    if push_feature.returncode != 0:
+        raise RuntimeError(push_feature.stderr.strip() or "git push feature branch failed")
 
 
 def main() -> None:

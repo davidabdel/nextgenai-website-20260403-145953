@@ -5,6 +5,14 @@ import { ArrowRight, BookOpen, Clock, Users, Zap, Brain, BarChart3, ChevronLeft 
 export const WikiIndex = ({ onNavigate }: { onNavigate: (page: string) => void }) => {
   const articles = [
     {
+      id: 'founder-ai-operating-cadence-20260417',
+      pill: 'FOUNDERS PLAYBOOK',
+      title: 'Founder AI Operating Cadence 20260417',
+      desc: 'How to implement technical AI systems that improve speed, margin, and governance.',
+      icon: <Brain size={24} />,
+      type: 'pillar'
+    },
+    {
       id: 'founder-ai-operating-cadence-20260416',
       pill: 'FOUNDERS PLAYBOOK',
       title: 'Founder AI Operating Cadence 20260416',
@@ -163,6 +171,33 @@ export const WikiIndex = ({ onNavigate }: { onNavigate: (page: string) => void }
 
 export const WikiArticle = ({ id, onBack }: { id: string; onBack: () => void }) => {
   const content: Record<string, any> = {
+    'founder-ai-operating-cadence-20260417': {
+      pill: 'FOUNDERS PLAYBOOK',
+      title: 'Founder AI Operating Cadence 20260417',
+      lede: 'A premium operating brief for founders building durable AI leverage.',
+      sections: [
+        {
+          type: 'text',
+          content: "Founder AI Operating Cadence 20260417 represents the next evolution of the founder's operating system—moving beyond simple task automation into true cognitive leverage."
+        },
+        {
+          type: 'text',
+          content: "For founders scaling past $10M, the bottleneck is rarely talent; it is the latency between signal and action. When your revenue data lives in one silo and your operational capacity in another, you aren't running a business—you're managing a series of expensive guesses."
+        },
+        {
+          type: 'text',
+          content: "A premium AI implementation doesn't just 'do work'; it collapses the distance between your strategic intent and the execution layer. By installing event-driven data listeners and role-specific agentic loops, you convert passive monitoring into active governance. This is how you reclaim 20+ hours a week while improving decision quality."
+        },
+        {
+          type: 'text',
+          content: "This isn't about replacing your team; it's about upgrading their operating environment so they can execute at 10x speed without the 10x burnout."
+        },
+        {
+          type: 'text',
+          content: "This framework integrates directly with your [AI Operating System (AI OS)](/wiki/what-is-an-ai-os). Before deployment, ensure you've completed the baseline [AI Audit](/wiki/ceos-guide-to-ai-audits) to identify your highest-leverage bottlenecks."
+        }
+      ]
+    },
     'founder-ai-operating-cadence-20260416': {
       pill: 'FOUNDERS PLAYBOOK',
       title: 'Founder AI Operating Cadence 20260416',
