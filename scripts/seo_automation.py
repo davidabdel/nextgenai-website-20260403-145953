@@ -28,7 +28,7 @@ def extract_existing_pages(wiki_content: str) -> list[dict[str, str]]:
         return []
 
     entries = re.findall(
-        r"\{\s*id:\s*'([^']+)'\s*,\s*pill:\s*'[^']*'\s*,\s*title:\s*('(?:[^'\\]|\\.)*'|\"(?:[^\"\\]|\\.)*\")",
+        r"\{\s*id:\s*'([^']+)'\s*,\s*pill:\s*'[^']*'\s*,\s*title:\s*('(?:[^'\\\\]|\\.)*'|\"(?:[^\"\\\\]|\\.)*\")",
         article_block.group(1),
         re.DOTALL,
     )
@@ -43,6 +43,9 @@ def extract_existing_pages(wiki_content: str) -> list[dict[str, str]]:
 def get_trending_or_founder_topics() -> list[str]:
     # No external web-search dependency in this runtime. Use founder-high-value topics.
     return [
+        "Multi-Agent AI Governance Systems for Scale-ups",
+        "Local-First AI: The Privacy Edge for Founders",
+        "AI-First ERP: Automating the Back-Office Ledger",
         "AI Revenue Ops Command Centers",
         "Private LLM Stack for Regulated Mid-Market Teams",
         "Agentic FP&A for Weekly Cashflow Command",
